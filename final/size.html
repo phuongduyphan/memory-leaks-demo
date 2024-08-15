@@ -8,6 +8,7 @@
 <body>
   <div>
     <button id="create-10k">Create 10k strings</button>
+    <button id="create-20k">Create 20k strings</button>
     <button id="clear-10k">Clear 10k strings</button>
     <button id="clear-all">Clear all strings</button>
   </div>
@@ -45,6 +46,13 @@
     console.log(strings.length);
   }
 
+  function create20kStrings() {
+    for (let i = 0; i < 20000; i++) {
+      strings.push(new Item(i.toString()));
+    }
+    console.log(strings.length);
+  }
+
   function clear10kStrings() {
     if (!strings) return;
 
@@ -60,6 +68,7 @@
   }
 
   document.getElementById('create-10k').addEventListener('click', () => create10kStrings());
+  document.getElementById('create-20k').addEventListener('click', () => create20kStrings());
   document.getElementById('clear-10k').addEventListener('click', () => clear10kStrings());
   document.getElementById('clear-all').addEventListener('click', () => strings = undefined);
 
