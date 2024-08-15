@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="create">create</button>
+  <button id="clear">clear</button>
+</body>
+
+<script>
+  var detachedNodes = [];
+
+  function create() {
+    var ul = document.createElement('ul');
+    for (var i = 0; i < 10; i++) {
+      var li = document.createElement('li');
+      ul.appendChild(li);
+    }
+    detachedNodes.push(ul);
+  }
+
+  function clear() {
+    // detachedNodes = [];
+    for (let i = 0; i < detachedNodes.length / 2; i += 1) { // clear 1/2
+      detachedNodes.pop();
+    }
+  }
+
+  document.getElementById('create').addEventListener('click', create);
+  document.getElementById('clear').addEventListener('click', clear);
+</script>
+
+</html>

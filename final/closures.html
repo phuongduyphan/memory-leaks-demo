@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn">Start</button>
+</body>
+
+<script>
+  function start() {
+    function demo() {
+      const bigArrayBuffer = new ArrayBuffer(100_000_000);
+
+      const id = setTimeout(() => {
+        console.log(bigArrayBuffer.byteLength);
+        alert('done');
+      }, 3000);
+
+      // return () => clearTimeout(id);
+    }
+
+    globalThis.cancelDemo = demo();
+  }
+
+  document.getElementById('btn').addEventListener('click', () => start());
+
+</script>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <button id="create-10k">Create 10k strings</button>
+    <button id="clear-10k">Clear 10k strings</button>
+    <button id="clear-all">Clear all strings</button>
+  </div>
+</body>
+
+<script>
+  class Item {
+    constructor(x) {
+      this.x = x;
+    }
+  }
+
+  let stringCache = [];
+
+  function create10kStrings() {
+    for (let i = 0; i < 10000; i++) {
+      stringCache.push(new Item(i.toString()));
+    }
+    console.log(stringCache.length);
+  }
+
+  function clear10kStrings() {
+    if (!stringCache) return;
+
+    const upper = stringCache.length - 1;
+    const lower =  Math.max(0, stringCache.length - 10000 + 1);
+    for (let i = upper; i >= lower; i-= 1) {
+      stringCache.pop();
+    }
+    console.log(stringCache.length);
+    // if (stringCache.length === 0) {
+    //   stringCache = undefined;
+    // }
+  }
+
+  document.getElementById('create-10k').addEventListener('click', () => create10kStrings());
+  document.getElementById('clear-10k').addEventListener('click', () => clear10kStrings());
+  document.getElementById('clear-all').addEventListener('click', () => stringCache = undefined);
+</script>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <button id="create-10k">Create 10k strings</button>
+    <button id="clear-10k">Clear 10k strings</button>
+    <button id="clear-all">Clear all strings</button>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button id="create-obj">Create myObj</button>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button id="assign-item">Assign item</button>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button id="assign-string-element">Assign strings[1] to myObj</button>
+  </div>
+</body>
+
+<script>
+  class Item {
+    constructor(x) {
+      this.x = x;
+    }
+  }
+
+  const x = new Item('x');
+
+  let strings = [];
+
+  let myObj = undefined;
+
+  function create10kStrings() {
+    for (let i = 0; i < 10000; i++) {
+      strings.push(new Item(i.toString()));
+    }
+    console.log(strings.length);
+  }
+
+  function clear10kStrings() {
+    if (!strings) return;
+
+    const upper = strings.length - 1;
+    const lower =  Math.max(0, strings.length - 10000 + 1);
+    for (let i = upper; i >= lower; i-= 1) {
+      strings.pop();
+    }
+    console.log(strings.length);
+    // if (stringCache.length === 0) {
+    //   stringCache = undefined;
+    // }
+  }
+
+  document.getElementById('create-10k').addEventListener('click', () => create10kStrings());
+  document.getElementById('clear-10k').addEventListener('click', () => clear10kStrings());
+  document.getElementById('clear-all').addEventListener('click', () => strings = undefined);
+
+  document.getElementById('create-obj').addEventListener('click', () => {
+    myObj = {
+      a: new Item('a'),
+      b: new Item('b'),
+    }
+  });
+
+  document.getElementById('assign-item').addEventListener('click', () => {
+    myObj.c = new Item('1');
+  });
+
+  document.getElementById('assign-string-element').addEventListener('click', () => {
+    myObj.c = strings[1];
+  });
+
+  /**
+   * - Create 10k strings
+   * - Take a snapshot
+   *
+   * - Create myObj
+   * - Take a snapshot (show obj allocated between 1 and 2, check size)
+   * - 16(a) + 16(b) + 120(map) + 20(Object shallow size) = 172 (Object retained size)
+   *
+   *
+   * - Assign item
+   * - Take a snapshot (show obj allocated between 1 and 2, check size)
+   * - 16 * 3 (a, b, c) + 172(map) + 20(properties) + 20(Object shallow size) = 260 (Object retained size)
+   *
+   * - Assign strings[1] to myObj
+   * - Take a snapshot (show obj allocated between 1 and 2, check size)
+   * - 16 * 3 (a, b, c) + 172(map) + 20(properties) + 20(Object shallow size) = 260 > 244 (Object retained size)
+   * - Why?
+   * - c is references in two places, shouldn't include c: 260 - 16 = 244
+   */
+</script>
+</html>
